@@ -26,4 +26,21 @@ public record Triangle(
         return side1 + side2 + side3;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return (Double.compare(side1, triangle.side1) == 0 && Double.compare(side2, triangle.side2) == 0 && Double.compare(side3, triangle.side3) == 0)
+                || (Double.compare(side1, triangle.side1) == 0 && Double.compare(side2, triangle.side3) == 0 && Double.compare(side3, triangle.side2) == 0)
+                || (Double.compare(side1, triangle.side3) == 0 && Double.compare(side2, triangle.side1) == 0 && Double.compare(side3, triangle.side2) == 0)
+                || (Double.compare(side1, triangle.side3) == 0 && Double.compare(side2, triangle.side2) == 0 && Double.compare(side3, triangle.side1) == 0)
+                || (Double.compare(side1, triangle.side2) == 0 && Double.compare(side2, triangle.side1) == 0 && Double.compare(side3, triangle.side3) == 0)
+                || (Double.compare(side1, triangle.side2) == 0 && Double.compare(side2, triangle.side3) == 0 && Double.compare(side3, triangle.side1) == 0);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 }

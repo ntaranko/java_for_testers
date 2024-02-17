@@ -30,13 +30,19 @@ public class TriangleTest {
     }
 
     @Test
-    void cannotCreateTriangleWithSides (){
+    void cannotCreateTriangleWithSides() {
         try {
             var triangle = new Triangle(6.0, 2.0, 3.0);
             Assertions.fail();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             //ok
         }
     }
 
+    @Test
+    void testEquality(){
+        var t1 = new Triangle(2.0, 3.0, 4.0);
+        var t2 = new Triangle(3.0, 4.0, 2.0);
+        Assertions.assertEquals(t1, t2);
+    }
 }
