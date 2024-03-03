@@ -15,7 +15,7 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void modifyContact(ContactData contact){
+    public void modifyContact(ContactData contact) {
         openHomePage();
         selectContact();
         initContactModification();
@@ -24,14 +24,14 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void removeContact(){
+    public void removeContacts() {
         openHomePage();
         selectContact();
-        removeSelectedContact();
+        removeSelectedContacts();
         openHomePage();
     }
 
-    private void removeSelectedContact() {
+    private void removeSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
     }
 
@@ -50,9 +50,11 @@ public class ContactHelper extends HelperBase {
     private void returnToHomePage() {
         click(By.linkText("home page"));
     }
+
     private void openHomePage() {
         click(By.linkText("home"));
     }
+
     private void submitContactCreation() {
         click(By.name("submit"));
     }
@@ -76,5 +78,28 @@ public class ContactHelper extends HelperBase {
     public boolean isContactPresent() {
         openHomePage();
         return manager.isElementPresent(By.name("selected[]"));
+    }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+    public void removeAllContacts() {
+        openHomePage();
+        selectAllContacts();
+        //selectAllContactsCheckbox();
+        removeSelectedContacts();
+    }
+
+    private void selectAllContacts() {
+        var checkboxes = manager.driver.findElements(By.name("selected[]"));
+        for (var checkbox : checkboxes) {
+            checkbox.click();
+        }
+    }
+
+    private void selectAllContactsCheckbox() {
+        click(By.id("MassCB"));
     }
 }
