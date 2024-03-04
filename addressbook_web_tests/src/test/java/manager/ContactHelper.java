@@ -61,7 +61,6 @@ public class ContactHelper extends HelperBase {
 
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
-        type(By.name("middlename"), contact.middleName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("company"), contact.companyName());
         type(By.name("address"), contact.address());
@@ -87,8 +86,8 @@ public class ContactHelper extends HelperBase {
 
     public void removeAllContacts() {
         openHomePage();
-        selectAllContacts();
-        //selectAllContactsCheckbox();
+        //selectAllContacts();
+        selectAllContactsCheckbox();
         removeSelectedContacts();
     }
 

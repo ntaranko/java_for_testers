@@ -1,7 +1,6 @@
 package model;
 
 public record ContactData(String firstName,
-                          String middleName,
                           String lastName,
                           String companyName,
                           String address,
@@ -10,21 +9,21 @@ public record ContactData(String firstName,
                           String workPhone,
                           String email) {
     public ContactData(){
-        this("","","","","","","","","");
+        this("", "","","","","","","");
     }
 
     public ContactData(String firstName, String lastName) {
-        this(firstName, "", lastName, "", "",
+        this(firstName, lastName, "", "",
                 "", "", "", "");
     }
 
     public ContactData(String firstName, String lastName, String email) {
-        this(firstName, "", lastName, "", "",
+        this(firstName, lastName, "", "",
                 "", "", "", email);
     }
 
     public ContactData(String firstName, String lastName, String address, String email) {
-        this(firstName, "", lastName, "", address,
+        this(firstName, lastName, "", address,
                 "", "", "", email);
     }
 
