@@ -3,6 +3,9 @@ package manager;
 import model.ContactData;
 import org.openqa.selenium.By;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ContactHelper extends HelperBase {
     public ContactHelper(ApplicationManager manager) {
         super(manager);
@@ -15,18 +18,18 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void modifyContact(ContactData contact) {
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
         openHomePage();
-        selectContact();
-        initContactModification();
-        fillContactForm(contact);
+        selectContact(contact);
+        initContactModification(contact);
+        fillContactForm(modifiedContact);
         submitContactModification();
         returnToHomePage();
     }
 
-    public void removeContacts() {
+    public void removeContacts(ContactData contact) {
         openHomePage();
-        selectContact();
+        selectContact(contact);
         removeSelectedContacts();
         openHomePage();
     }
@@ -39,12 +42,20 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
-    private void initContactModification() {
-        click(By.xpath("(//img[@alt=\'Edit\'])[2]"));
+    private void initContactModification(ContactData contact) {
+        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
+        for (var row : rows) {
+            var checkbox = row.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            if (contact.id().equals(id)) {
+                row.findElement(By.cssSelector("img[title='Edit']")).click();
+                return;
+            }
+        }
     }
 
-    private void selectContact() {
-        click(By.name("selected[]"));
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     private void returnToHomePage() {
@@ -100,5 +111,20 @@ public class ContactHelper extends HelperBase {
 
     private void selectAllContactsCheckbox() {
         click(By.id("MassCB"));
+    }
+
+    public List<ContactData> getList() {
+        openHomePage();
+        var contacts = new ArrayList<ContactData>();
+        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
+        for (var row : rows) {
+            var lastName = row.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            var firstName = row.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            var checkbox = row.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+
+            contacts.add(new ContactData(id, firstName, lastName));
+        }
+        return contacts;
     }
 }
