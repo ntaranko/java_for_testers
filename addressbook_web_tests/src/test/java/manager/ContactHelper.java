@@ -43,15 +43,8 @@ public class ContactHelper extends HelperBase {
     }
 
     private void initContactModification(ContactData contact) {
-        var rows = manager.driver.findElements(By.cssSelector("tr[name='entry']"));
-        for (var row : rows) {
-            var checkbox = row.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            if (contact.id().equals(id)) {
-                row.findElement(By.cssSelector("img[title='Edit']")).click();
-                return;
-            }
-        }
+        var id = contact.id();
+        click(By.cssSelector(String.format("a[href='edit.php?id=%s']", id)));
     }
 
     private void selectContact(ContactData contact) {
@@ -73,11 +66,8 @@ public class ContactHelper extends HelperBase {
     private void fillContactForm(ContactData contact) {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
-        type(By.name("company"), contact.companyName());
         type(By.name("address"), contact.address());
-        type(By.name("home"), contact.homePhone());
         type(By.name("mobile"), contact.mobilePhone());
-        type(By.name("work"), contact.workPhone());
         type(By.name("email"), contact.email());
     }
 
@@ -123,7 +113,9 @@ public class ContactHelper extends HelperBase {
             var checkbox = row.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
 
-            contacts.add(new ContactData(id, firstName, lastName));
+            contacts.add(new ContactData().withId(id)
+                    .withFirstName(firstName)
+                    .withLastName(lastName));
         }
         return contacts;
     }

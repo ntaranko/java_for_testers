@@ -19,7 +19,9 @@ public class ContactCreationTests extends TestBase {
                 for (var address : List.of("", "Minsk Address")) {
                     for (var email : List.of("", "test@test.com")) {
                         {
-                            result.add(new ContactData("", firstName, lastName, address, email));
+                            result.add(new ContactData().withFirstName(firstName)
+                                    .withLastName(lastName).withAddress(address)
+                                    .withEmail(email));
                         }
                     }
                 }
@@ -27,14 +29,11 @@ public class ContactCreationTests extends TestBase {
         }
 
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData("",
-                    randomString(i * 10),
-                    randomString(i * 10),
-                    randomString(i * 10),
-                    randomString(i * 10),
-                    randomString(i * 10),
-                    randomString(i * 10),
-                    randomString(i * 10), randomEmail(i * 10)));
+            result.add(new ContactData().withFirstName(randomString(i * 10))
+                    .withLastName(randomString(i * 10))
+                    .withAddress(randomString(i * 10))
+                    .withMobilePhone(randomString(i * 10))
+                    .withEmail(randomEmail(i * 10)));
 
         }
         return result;
@@ -53,19 +52,17 @@ public class ContactCreationTests extends TestBase {
         newContacts.sort(compareById);
 
         var expectedList = new ArrayList<>(oldContacts);
-        var contactWithId = new ContactData(     //create intermediate contact with id, firstName, lastName
-                newContacts.get(newContacts.size()-1).id(),
-                contact.firstName(),
-                contact.lastName()
-        );
-        expectedList.add(contactWithId); //add contact with id
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id())
+                .withAddress("")
+                .withMobilePhone("")
+                .withEmail(""));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "first name'", "last name")));
+                new ContactData("", "first name'", "last name", "", "", "", "")));
         return result;
     }
 

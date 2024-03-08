@@ -15,24 +15,16 @@ public class ContactModificationTests extends TestBase {
     public void canModifyContact() {
         if (!app.contacts().isContactPresent()) {
             app.contacts().createContact(
-                    new ContactData("", "Sergey", "Petrov", "email@test.ru"));
+                    new ContactData("", "Sergey", "Petrov", "email@test.ru", "", "", ""));
         }
         var oldContacts = app.contacts().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
-        var testData = new ContactData("", "New First Name", "New Last Name");
+        var testData = new ContactData("", "New First Name", "New Last Name", "", "", "", "");
         app.contacts().modifyContact(oldContacts.get(index), testData);
         var newContacts = app.contacts().getList();
         var expectedList = new ArrayList<>(oldContacts);
-
-        //to set id for testData
-        var testDataWithId = new ContactData(
-                oldContacts.get(index).id(),
-                testData.firstName(),
-                testData.lastName()
-        );
-
-        expectedList.set(index, testDataWithId);
+        expectedList.set(index, testData.withId(oldContacts.get(index).id()));
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
