@@ -1,5 +1,6 @@
 package tests.contacts;
 
+import common.CommonFunctions;
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,10 +31,10 @@ public class ContactCreationTests extends TestBase {
         }
 
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData().withFirstName(randomString(i * 10))
-                    .withLastName(randomString(i * 10))
-                    .withAddress(randomString(i * 10))
-                    .withMobilePhone(randomString(i * 10))
+            result.add(new ContactData().withFirstName(CommonFunctions.randomString(i * 10))
+                    .withLastName(CommonFunctions.randomString(i * 10))
+                    .withAddress(CommonFunctions.randomString(i * 10))
+                    .withMobilePhone(CommonFunctions.randomString(i * 10))
                     .withEmail(randomEmail(i * 10)));
 
         }
@@ -80,8 +81,8 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void canCreateContactWithPhoto() {
         app.contacts().createContact(new ContactData()
-                .withFirstName(randomString(10))
-                .withLastName(randomString(10))
+                .withFirstName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(10))
                 .withEmail(randomEmail(10))
                 .withPhoto(randomFile("src/test/resources/images/")));
     }
