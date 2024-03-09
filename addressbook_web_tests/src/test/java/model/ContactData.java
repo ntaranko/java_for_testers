@@ -12,7 +12,8 @@ public record ContactData(String id,
     }
 
     public ContactData withId (String id){
-        return new ContactData(id,
+        return new ContactData(
+                id,
                 this.firstName,
                 this.lastName,
                 this.address,
@@ -22,7 +23,8 @@ public record ContactData(String id,
     }
 
     public ContactData withFirstName (String firstName){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 firstName,
                 this.lastName,
                 this.address,
@@ -32,7 +34,8 @@ public record ContactData(String id,
     }
 
     public ContactData withLastName (String lastName){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 this.firstName,
                 lastName,
                 this.address,
@@ -42,7 +45,8 @@ public record ContactData(String id,
     }
 
     public ContactData withAddress (String address){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 this.firstName,
                 this.lastName,
                 address,
@@ -52,7 +56,8 @@ public record ContactData(String id,
     }
 
     public ContactData withMobilePhone (String mobilePhone){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
@@ -62,7 +67,8 @@ public record ContactData(String id,
     }
 
     public ContactData withEmail (String email){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
@@ -72,7 +78,8 @@ public record ContactData(String id,
     }
 
     public ContactData withPhoto (String photo){
-        return new ContactData(this.id,
+        return new ContactData(
+                this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
