@@ -83,6 +83,6 @@ public class ContactCreationTests extends TestBase {
                 .withFirstName(randomString(10))
                 .withLastName(randomString(10))
                 .withEmail(randomEmail(10))
-                .withPhoto("src/test/resources/images/avatar.png"));
+                .withPhoto(randomFile("src/test/resources/images/")));
     }
 }
