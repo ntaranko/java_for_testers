@@ -52,13 +52,13 @@ public class GroupCreationTest extends TestBase {
 
     public static List<GroupData> jsonGroupProvider() throws IOException {
         var result = new ArrayList<GroupData>();
-        for (var name : List.of("", "group name")) {
+        /*for (var name : List.of("", "group name")) {
             for (var header : List.of("", "group header")) {
                 for (var footer : List.of("", "group footer")) {
                     result.add(new GroupData().withName(name).withHeader(header).withFooter(footer));
                 }
             }
-        }
+        }*/
         ObjectMapper mapper = new ObjectMapper();
         //====================
         // 1st way
