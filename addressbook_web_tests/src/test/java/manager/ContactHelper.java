@@ -68,7 +68,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobilePhone());
         type(By.name("email"), contact.email());
-        attach(By.name("photo"), contact.photo());
+       // attach(By.name("photo"), contact.photo());
     }
 
     private void initContactCreation() {

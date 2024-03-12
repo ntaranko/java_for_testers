@@ -25,17 +25,4 @@ public class TestBase {
         var index = rnd.nextInt(fileNames.length);
         return Paths.get(dir, fileNames[index]).toString();
     }
-
-    public static String randomEmail(int n) {
-        var rnd = new Random();
-        var result = "";
-        for (int i = 0; i < n; i++) {
-            result = result + (char) ('a' + rnd.nextInt(26));
-        }
-
-        if (result.equals("")){
-            return result;
-        }
-        return result + "@gmail.com";
-    }
 }

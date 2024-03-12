@@ -68,7 +68,8 @@ public class GroupCreationTest extends TestBase {
 
         // 2d way
         var json = Files.readString(Paths.get("groups.json"));
-        var value = mapper.readValue(json, new TypeReference<List<GroupData>>() {});
+        var value = mapper.readValue(json, new TypeReference<List<GroupData>>() {
+        });
 
         // 3d way
        /* var json = "";
