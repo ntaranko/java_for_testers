@@ -16,7 +16,7 @@ public class ApplicationManager {
     private GroupHelper groups;
     private ContactHelper contacts;
     private JdbcHelper jdbc;
-
+    private HibernateHelper hbm;
     private Properties properties;
 
     public void init(String browser, Properties properties) {
@@ -51,18 +51,24 @@ public class ApplicationManager {
         return groups;
     }
 
+    public ContactHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactHelper(this);
+        }
+        return contacts;
+    }
+
     public JdbcHelper jdbc() {
         if (jdbc == null) {
             jdbc = new JdbcHelper(this);
         }
         return jdbc;
     }
-
-    public ContactHelper contacts() {
-        if (contacts == null) {
-            contacts = new ContactHelper(this);
+    public HibernateHelper hbm() {
+        if (hbm == null) {
+            hbm = new HibernateHelper(this);
         }
-        return contacts;
+        return hbm;
     }
 
     protected boolean isElementPresent(By locator) {
