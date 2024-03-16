@@ -35,4 +35,30 @@ public class GroupRemovalTests extends TestBase {
         app.groups().removeAllGroups();
         Assertions.assertEquals(0, app.groups().getCount());
     }
+
+    @Test
+    public void canRemoveGroupHbm() {
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(
+                    new GroupData("", "Test group", "test group header", "test group footer"));
+        }
+        var oldGroups = app.hbm().getGroupList();
+        var rnd = new Random();
+        var index = rnd.nextInt(oldGroups.size());
+        app.groups().removeGroup(oldGroups.get(index));
+        var newGroups = app.hbm().getGroupList();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.remove(index);
+        Assertions.assertEquals(newGroups, expectedList);
+    }
+
+    @Test
+    void canRemoveAllGroupsAtOnesHbm(){
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(
+                    new GroupData("", "Test group", "test group header", "test group footer"));
+        }
+        app.groups().removeAllGroups();
+        Assertions.assertEquals(0, app.hbm().getGroupCount());
+    }
 }

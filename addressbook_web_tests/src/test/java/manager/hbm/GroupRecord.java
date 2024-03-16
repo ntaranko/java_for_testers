@@ -8,6 +8,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "group_list")
 public class GroupRecord {
+
     @Id
     @Column(name = "group_id")
     public int id;
@@ -18,4 +19,13 @@ public class GroupRecord {
     @Column(name = "group_footer")
     public String footer;
 
+    public GroupRecord() {
+    }
+
+    public GroupRecord(int id, String name, String header, String footer) {
+        this.id = id;
+        this.name = name;
+        this.header = header;
+        this.footer = footer;
+    }
 }
