@@ -165,7 +165,7 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-    void canCreateContactInGroup(){
+    void canCreateContactInGroup() {
         var contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(5))
                 .withLastName(CommonFunctions.randomString(10))
@@ -182,8 +182,6 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
-
-
 
     }
 }
