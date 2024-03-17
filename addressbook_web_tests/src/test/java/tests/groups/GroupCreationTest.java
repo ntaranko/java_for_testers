@@ -33,7 +33,6 @@ public class GroupCreationTest extends TestBase {
         return result;
     }
 
-
     @ParameterizedTest
     @MethodSource("groupProvider")
     public void canCreateMultipleGroup(GroupData group) {
@@ -155,8 +154,8 @@ public class GroupCreationTest extends TestBase {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newGroups.sort(compareById);
-        var maxId = newGroups.get(newGroups.size() - 1).id();
 
+        var maxId = newGroups.get(newGroups.size() - 1).id();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);

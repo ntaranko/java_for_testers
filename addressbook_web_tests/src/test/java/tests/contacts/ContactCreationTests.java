@@ -100,9 +100,9 @@ public class ContactCreationTests extends TestBase {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newContacts.sort(compareById);
-
+        var maxId = newContacts.get(newContacts.size() - 1).id();
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id())
+        expectedList.add(contact.withId(maxId)
                 .withAddress("")
                 .withMobilePhone("")
                 .withEmail(""));
@@ -134,4 +134,33 @@ public class ContactCreationTests extends TestBase {
                 .withEmail(CommonFunctions.randomEmail(10))
                 .withPhoto(randomFile("src/test/resources/images/")));
     }
+
+
+    public static List<ContactData> singleContactProvider() {
+        return List.of(new ContactData()
+                .withFirstName(CommonFunctions.randomString(5))
+                .withLastName(CommonFunctions.randomString(10))
+                .withAddress(CommonFunctions.randomString(15))
+                .withMobilePhone(CommonFunctions.randomString(12))
+                .withEmail(CommonFunctions.randomEmail(10)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleContactProvider")
+    public void canCreateContactHibernate(ContactData contact) {
+        var oldContacts = app.hbm().getContactList();
+        app.contacts().createContact(contact);
+        var newContacts = app.hbm().getContactList();
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+
+        var maxId = newContacts.get(newContacts.size() - 1).id();
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.add(contact.withId(maxId));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedList);
+    }
+
 }
