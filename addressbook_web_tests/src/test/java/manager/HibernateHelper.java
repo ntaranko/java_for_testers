@@ -19,7 +19,7 @@ public class HibernateHelper extends HelperBase {
         sessionFactory = new Configuration()
                 .addAnnotatedClass(GroupRecord.class)
                 .addAnnotatedClass(ContactRecord.class)
-                .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook")
+                .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
                 // Credentials
                 .setProperty(AvailableSettings.USER, "root")
                 .setProperty(AvailableSettings.PASS, "")
@@ -72,11 +72,18 @@ public class HibernateHelper extends HelperBase {
             result.add(convertContact(record));
         }
         return result;
-
     }
 
     private static ContactData convertContact(ContactRecord record) {
         return new ContactData("" + record.id, record.firstName, record.lastName, record.address, record.mobilePhone, record.email, "");
+    }
+
+    private static ContactRecord convertContact(ContactData data) {
+        var id = data.id();
+        if ("".equals(id)) {
+            id = "0";
+        }
+        return new ContactRecord(Integer.parseInt(id), data.firstName(), data.lastName(), data.address(), data.mobilePhone(), data.email());
     }
 
     public List<ContactData> getContactList() {
@@ -88,6 +95,12 @@ public class HibernateHelper extends HelperBase {
     public long getContactCount() {
         return sessionFactory.fromSession(session -> {
             return session.createQuery("select count(*) from ContactRecord", long.class).getSingleResult();
+        });
+    }
+
+    public List<ContactData> getContactsInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
 }
