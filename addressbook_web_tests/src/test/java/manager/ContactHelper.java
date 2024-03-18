@@ -41,6 +41,22 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectToGroup(group);
+        addToGroup();
+        openHomePage();
+    }
+
+    private void selectToGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
+    private void addToGroup() {
+        click(By.name("add"));
+    }
+
     public void removeContacts(ContactData contact) {
         openHomePage();
         selectContact(contact);
@@ -83,7 +99,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobilePhone());
         type(By.name("email"), contact.email());
-       // attach(By.name("photo"), contact.photo());
+        // attach(By.name("photo"), contact.photo());
     }
 
     private void initContactCreation() {
@@ -133,5 +149,22 @@ public class ContactHelper extends HelperBase {
                     .withLastName(lastName));
         }
         return contacts;
+    }
+
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectGroupToFilter(group);
+        selectContact(contact);
+        removeSelectedContactFromGroup();
+        openHomePage();
+    }
+
+    private void removeSelectedContactFromGroup() {
+        click(By.name("remove"));
+    }
+
+    private void selectGroupToFilter(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 }

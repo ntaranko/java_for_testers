@@ -17,11 +17,12 @@ public class ContactModificationTests extends TestBase {
             app.contacts().createContact(
                     new ContactData("", "Sergey", "Petrov", "email@test.ru", "+375292217200", "test@test.ru", ""));
         }
+        var testData = new ContactData("", "New First Name", "New Last Name", "", "", "", "");
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
-        var testData = new ContactData("", "New First Name", "New Last Name", "", "", "", "");
-        app.contacts().modifyContact(oldContacts.get(index), testData);
+        var contactToModify = oldContacts.get(index);
+        app.contacts().modifyContact(contactToModify, testData);
         var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.set(index, testData.withId(oldContacts.get(index).id()));

@@ -47,5 +47,4 @@ public class JdbcHelper extends HelperBase {
         }
     }
 
-
 }
