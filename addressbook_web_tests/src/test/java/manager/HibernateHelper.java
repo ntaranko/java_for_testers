@@ -103,4 +103,13 @@ public class HibernateHelper extends HelperBase {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
+
+    //DOESN'T work
+    public List<ContactData> getContactsNotInGroup(GroupData group) {
+        String query = String.format("from ContactRecord as cr where cr.id not in (select id from address_in_groups ad where ad.group_id = $s)", group.id());
+        return convertContactList(sessionFactory.fromSession(session -> {
+            return session.createQuery(query, ContactRecord.class).list();
+        }));
+        
+    }
 }
