@@ -167,14 +167,4 @@ public class ContactHelper extends HelperBase {
     private void selectGroupToFilter(GroupData group) {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
-
-    public List<ContactData> getNotRelatedContacts(List<ContactData> contactList, List<ContactData> relatedContactList) {
-        var notRelatedContactList = new ArrayList<ContactData>();
-        for (ContactData contactData : contactList) {
-            if (!relatedContactList.contains(contactData)) {
-                notRelatedContactList.add(contactData);
-            }
-        }
-        return notRelatedContactList;
-    }
 }
