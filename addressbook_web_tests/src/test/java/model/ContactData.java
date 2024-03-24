@@ -4,86 +4,152 @@ public record ContactData(String id,
                           String firstName,
                           String lastName,
                           String address,
+                          String homePhone,
                           String mobilePhone,
+                          String workPhone,
+                          String secondaryPhone,
                           String email,
                           String photo) {
     public ContactData() {
-        this("", "", "", "", "", "","");
+        this("", "", "", "", "", "", "", "", "", "");
     }
 
-    public ContactData withId (String id){
+    public ContactData withId(String id) {
         return new ContactData(
                 id,
                 this.firstName,
                 this.lastName,
                 this.address,
+                this.homePhone,
                 this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 this.photo);
     }
 
-    public ContactData withFirstName (String firstName){
+    public ContactData withFirstName(String firstName) {
         return new ContactData(
                 this.id,
                 firstName,
                 this.lastName,
                 this.address,
+                this.homePhone,
                 this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 this.photo);
     }
 
-    public ContactData withLastName (String lastName){
+    public ContactData withLastName(String lastName) {
         return new ContactData(
                 this.id,
                 this.firstName,
                 lastName,
                 this.address,
+                this.homePhone,
                 this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 this.photo);
     }
 
-    public ContactData withAddress (String address){
+    public ContactData withAddress(String address) {
         return new ContactData(
                 this.id,
                 this.firstName,
                 this.lastName,
                 address,
+                this.homePhone,
                 this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 this.photo);
     }
 
-    public ContactData withMobilePhone (String mobilePhone){
+    public ContactData withHomePhone(String homePhone) {
         return new ContactData(
                 this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
+                this.homePhone,
+                this.mobilePhone,
+                workPhone,
+                this.secondaryPhone,
+                this.email,
+                this.photo);
+    }
+
+    public ContactData withMobilePhone(String mobilePhone) {
+        return new ContactData(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.homePhone,
                 mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 this.photo);
     }
 
-    public ContactData withEmail (String email){
+    public ContactData withWorkPhone(String workPhone) {
         return new ContactData(
                 this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
+                this.homePhone,
                 this.mobilePhone,
+                workPhone,
+                this.secondaryPhone,
+                this.email,
+                this.photo);
+    }
+
+    public ContactData withSecondaryPhone(String secondaryPhone) {
+        return new ContactData(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.homePhone,
+                this.mobilePhone,
+                this.workPhone,
+                secondaryPhone,
+                this.email,
+                this.photo);
+    }
+
+    public ContactData withEmail(String email) {
+        return new ContactData(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.homePhone,
+                this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 email,
                 this.photo);
     }
 
-    public ContactData withPhoto (String photo){
+    public ContactData withPhoto(String photo) {
         return new ContactData(
                 this.id,
                 this.firstName,
                 this.lastName,
                 this.address,
+                this.homePhone,
                 this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
                 this.email,
                 photo);
     }
