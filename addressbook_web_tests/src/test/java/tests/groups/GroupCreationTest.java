@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class GroupCreationTest extends TestBase {
 
@@ -144,8 +146,17 @@ public class GroupCreationTest extends TestBase {
         expectedList.sort(compareById);
         Assertions.assertEquals(newGroups, expectedList);
     }
+
+    public static Stream<GroupData> singleGroupProviderStream() {
+        Supplier<GroupData> randomGroup = () -> new GroupData()
+                .withName(CommonFunctions.randomString(10))
+                .withHeader(CommonFunctions.randomString(15))
+                .withFooter(CommonFunctions.randomString(20));
+        return Stream.generate(randomGroup).limit(3);
+    }
+
     @ParameterizedTest
-    @MethodSource("singleGroupProvider")
+    @MethodSource("singleGroupProviderStream")
     public void canCreateGroupHibernate(GroupData group) {
         var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);

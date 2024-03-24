@@ -8,9 +8,15 @@ public record Square (double side){
         }
     }
 
-    public static void printSquareArea(Square s) {
+    public static void printArea(Square s) {
         var text = String.format("Площадь квадрата со стороной %f = %f",
                 s.side, s.area());
+        System.out.println( text);
+    }
+
+    public static void printPerimeter(Square s) {
+        var text = String.format("Периметр квадрата со стороной %f = %f",
+                s.side, s.perimeter());
         System.out.println( text);
     }
 
