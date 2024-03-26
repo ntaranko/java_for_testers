@@ -7,7 +7,6 @@ import model.GroupData;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,6 +76,8 @@ public class HibernateHelper extends HelperBase {
                 record.workPhone,
                 record.secondaryPhone,
                 record.email,
+                record.email2,
+                record.email3,
                 "");
     }
 
@@ -94,7 +95,9 @@ public class HibernateHelper extends HelperBase {
                 data.mobilePhone(),
                 data.workPhone(),
                 data.secondaryPhone(),
-                data.email());
+                data.email(),
+                data.email2(),
+                data.email3());
     }
 
     public List<ContactData> getContactList() {

@@ -100,8 +100,13 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contact.firstName());
         type(By.name("lastname"), contact.lastName());
         type(By.name("address"), contact.address());
+        type(By.name("home"), contact.homePhone());
         type(By.name("mobile"), contact.mobilePhone());
+        type(By.name("work"), contact.workPhone());
+
         type(By.name("email"), contact.email());
+        type(By.name("email2"), contact.email2());
+        type(By.name("email3"), contact.email3());
         // attach(By.name("photo"), contact.photo());
     }
 
@@ -186,5 +191,17 @@ public class ContactHelper extends HelperBase {
             result.put(id, phones);
         }
         return result;
+    }
+
+    public String getEmails(ContactData contact) {
+        return manager.driver.findElement(By.xpath(
+                        String.format("//input[@id='%s']/../../td[5]", contact.id())))
+                .getText();
+    }
+
+    public String getAddress(ContactData contact) {
+        return manager.driver.findElement(By.xpath(
+                        String.format("//input[@id='%s']/../../td[4]", contact.id())))
+                .getText();
     }
 }

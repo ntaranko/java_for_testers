@@ -31,7 +31,6 @@ public class ContactsGroupsConnectionsTests extends TestBase {
                                 .withFooter(CommonFunctions.randomString(5))));
     }
 
-
     @ParameterizedTest
     @MethodSource("contactAndGroupProvider")
     void canRemoveContactFromGroup(ContactData contact, GroupData group) {

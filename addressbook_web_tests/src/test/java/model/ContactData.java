@@ -9,9 +9,11 @@ public record ContactData(String id,
                           String workPhone,
                           String secondaryPhone,
                           String email,
+                          String email2,
+                          String email3,
                           String photo) {
     public ContactData() {
-        this("", "", "", "", "", "", "", "", "", "");
+        this("", "", "", "", "", "", "", "", "", "", "", "");
     }
 
     public ContactData withId(String id) {
@@ -25,6 +27,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -39,6 +43,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -53,6 +59,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -67,6 +75,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -76,11 +86,13 @@ public record ContactData(String id,
                 this.firstName,
                 this.lastName,
                 this.address,
-                this.homePhone,
+                homePhone,
                 this.mobilePhone,
-                workPhone,
+                this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -95,6 +107,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -109,6 +123,8 @@ public record ContactData(String id,
                 workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -123,6 +139,8 @@ public record ContactData(String id,
                 this.workPhone,
                 secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 this.photo);
     }
 
@@ -137,6 +155,40 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 email,
+                this.email2,
+                this.email3,
+                this.photo);
+    }
+
+    public ContactData withEmail2(String email2) {
+        return new ContactData(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.homePhone,
+                this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
+                this.email,
+                email2,
+                this.email3,
+                this.photo);
+    }
+
+    public ContactData withEmail3(String email3) {
+        return new ContactData(
+                this.id,
+                this.firstName,
+                this.lastName,
+                this.address,
+                this.homePhone,
+                this.mobilePhone,
+                this.workPhone,
+                this.secondaryPhone,
+                this.email,
+                this.email2,
+                email3,
                 this.photo);
     }
 
@@ -151,6 +203,8 @@ public record ContactData(String id,
                 this.workPhone,
                 this.secondaryPhone,
                 this.email,
+                this.email2,
+                this.email3,
                 photo);
     }
 
