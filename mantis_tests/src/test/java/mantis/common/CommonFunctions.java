@@ -2,6 +2,7 @@ package mantis.common;
 
 import java.util.Random;
 import java.util.function.Supplier;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,5 +53,16 @@ public class CommonFunctions {
             return result;
         }
         return result + "@localhost";
+    }
+
+    public static String extractUrl(String text) {
+        var pattern = Pattern.compile("http://\\S*");
+        var matcher = pattern.matcher(text);
+        if(matcher.find()){
+            var url = text.substring(matcher.start(), matcher.end());
+            System.out.println("URL = " + url);
+            return url;
+        }
+        return null;
     }
 }

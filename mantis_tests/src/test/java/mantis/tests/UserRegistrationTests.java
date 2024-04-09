@@ -23,7 +23,22 @@ public class UserRegistrationTests extends TestBase {
         app.jamesCli().addUser(email, password);
         app.browserHelper().signUp(username, email);
         var messages = app.mail().receive(email, password, Duration.ofSeconds(10));
-        var url = app.mail().extractUrl(messages);
+        var url = CommonFunctions.extractUrl(messages.get(0).content());
+        app.browserHelper().openLink(url);
+        app.browserHelper().setPassword(username, password);
+        app.http().login(username, password);
+        Assertions.assertTrue(app.http().isLoggedIn());
+    }
+
+    @ParameterizedTest
+    @MethodSource("usernameProvider")
+    void canRegisterUserApi(String username) {
+        var email = String.format("%s@localhost", username);
+        var password = "password";
+        app.jamesApi().addUser(email, password);
+        app.browserHelper().signUp(username, email);
+        var messages = app.mail().receive(email, password, Duration.ofSeconds(10));
+        var url = CommonFunctions.extractUrl(messages.get(0).content());
         app.browserHelper().openLink(url);
         app.browserHelper().setPassword(username, password);
         app.http().login(username, password);

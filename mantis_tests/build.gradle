@@ -16,6 +16,7 @@ dependencies {
     testImplementation "com.squareup.okhttp3:okhttp:4.12.0"
     testImplementation "com.squareup.okhttp3:okhttp-urlconnection:4.12.0"
     testImplementation 'org.eclipse.angus:angus-mail:2.0.3'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.16.0'
 }
 
 test {
