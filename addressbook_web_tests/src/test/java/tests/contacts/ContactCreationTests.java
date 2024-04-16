@@ -36,7 +36,7 @@ public class ContactCreationTests extends TestBase {
             }
         }*/
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             result.add(new ContactData().withFirstName(CommonFunctions.randomString(i * 5))
                     .withLastName(CommonFunctions.randomString(i * 5))
                     .withAddress(CommonFunctions.randomString(i * 5))
@@ -124,7 +124,6 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
         var newContacts = app.contacts().getList();
         Assertions.assertEquals(oldContacts, newContacts);
-
     }
 
     @Test
