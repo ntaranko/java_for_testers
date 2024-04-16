@@ -1,5 +1,6 @@
 package manager;
 
+import io.qameta.allure.Step;
 import model.ContactData;
 import model.GroupData;
 import org.openqa.selenium.By;
@@ -159,7 +160,7 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-
+    @Step
     public void removeContactFromGroup(ContactData contact, GroupData group) {
         openHomePage();
         selectGroupToFilter(group);
