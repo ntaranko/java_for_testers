@@ -1,6 +1,7 @@
 package tests.groups;
 
 import common.CommonFunctions;
+import io.qameta.allure.Allure;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,15 +15,19 @@ import java.util.Set;
 public class GroupModificationTest extends TestBase {
 
     @Test
-    void canModifyGroup(){
-        if (app.groups().getCount() == 0){
-            app.groups().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
-        }
+    void canModifyGroup() {
+        Allure.step("Checking precondition", step -> {
+            if (app.groups().getCount() == 0) {
+                app.groups().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
+            }
+        });
         var oldGroups = app.groups().getList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName("modified name");
-        app.groups().modifyGroup(oldGroups.get(index), testData);
+        Allure.step("Group modification", step -> {
+            app.groups().modifyGroup(oldGroups.get(index), testData);
+        });
         var newGroups = app.groups().getList();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.set(index, testData.withId(oldGroups.get(index).id()));
@@ -31,19 +36,25 @@ public class GroupModificationTest extends TestBase {
         };
         newGroups.sort(compareById);
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newGroups, expectedList);
+        });
     }
 
     @Test
-    void canModifyGroupHbm(){
-        if (app.hbm().getGroupCount() == 0){
-            app.hbm().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
-        }
+    void canModifyGroupHbm() {
+        Allure.step("Checking precondition", step -> {
+            if (app.groups().getCount() == 0) {
+                app.groups().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
+            }
+        });
         var oldGroups = app.hbm().getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName("modified name");
-        app.groups().modifyGroup(oldGroups.get(index), testData);
+        Allure.step("Group modification", step -> {
+            app.groups().modifyGroup(oldGroups.get(index), testData);
+        });
         var newGroups = app.hbm().getGroupList();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.set(index, testData.withId(oldGroups.get(index).id()));
@@ -52,22 +63,30 @@ public class GroupModificationTest extends TestBase {
         };
         newGroups.sort(compareById);
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newGroups, expectedList);
+        });
     }
 
     @Test
-    void canModifyGroupHbmSet(){
-        if (app.hbm().getGroupCount() == 0){
-            app.hbm().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
-        }
+    void canModifyGroupHbmSet() {
+        Allure.step("Checking precondition", step -> {
+            if (app.groups().getCount() == 0) {
+                app.groups().createGroup(new GroupData("", "Test group", "test group header", "test group footer"));
+            }
+        });
         var oldGroups = app.hbm().getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
         var testData = new GroupData().withName(CommonFunctions.randomString(10));
-        app.groups().modifyGroup(oldGroups.get(index), testData);
+        Allure.step("Group modification", step -> {
+            app.groups().modifyGroup(oldGroups.get(index), testData);
+        });
         var newGroups = app.hbm().getGroupList();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.set(index, testData.withId(oldGroups.get(index).id()));
-        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+        });
     }
 }

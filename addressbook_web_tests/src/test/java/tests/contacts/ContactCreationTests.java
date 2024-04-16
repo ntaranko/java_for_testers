@@ -3,6 +3,7 @@ package tests.contacts;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.CommonFunctions;
+import io.qameta.allure.Allure;
 import model.ContactData;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
@@ -51,7 +52,9 @@ public class ContactCreationTests extends TestBase {
     @MethodSource("contactProvider")
     public void canCreateMultipleContact(ContactData contact) {
         var oldContacts = app.contacts().getList();
-        app.contacts().createContact(contact); //check methods (id)
+        Allure.step("Creating contacts", step -> {
+            app.contacts().createContact(contact);
+        });
         var newContacts = app.contacts().getList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -64,7 +67,9 @@ public class ContactCreationTests extends TestBase {
                 .withMobilePhone("")
                 .withEmail(""));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newContacts, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newContacts, expectedList);
+        });
     }
 
     public static List<ContactData> jsonContactProvider() throws IOException {
@@ -95,7 +100,9 @@ public class ContactCreationTests extends TestBase {
     @MethodSource("jsonContactProvider")
     public void canCreateMultipleContactFromJson(ContactData contact) {
         var oldContacts = app.contacts().getList();
-        app.contacts().createContact(contact); //check methods (id)
+        Allure.step("Creating contacts", step -> {
+            app.contacts().createContact(contact);
+        });
         var newContacts = app.contacts().getList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -108,12 +115,14 @@ public class ContactCreationTests extends TestBase {
                 .withMobilePhone("")
                 .withEmail(""));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newContacts, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newContacts, expectedList);
+        });
     }
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "first name'", "last name", "", "", "","","" , "", "","","")));
+                new ContactData("", "first name'", "last name", "", "", "", "", "", "", "", "", "")));
         return result;
     }
 
@@ -121,9 +130,14 @@ public class ContactCreationTests extends TestBase {
     @MethodSource("negativeContactProvider")
     public void canNotCreateContact(ContactData contact) {
         var oldContacts = app.contacts().getList();
-        app.contacts().createContact(contact);
+        Allure.step("Creating contacts", step -> {
+            app.contacts().createContact(contact);
+        });
         var newContacts = app.contacts().getList();
-        Assertions.assertEquals(oldContacts, newContacts);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(oldContacts, newContacts);
+        });
+
     }
 
     @Test
@@ -149,7 +163,9 @@ public class ContactCreationTests extends TestBase {
     @MethodSource("singleContactProvider")
     public void canCreateContactHibernate(ContactData contact) {
         var oldContacts = app.hbm().getContactList();
-        app.contacts().createContact(contact);
+        Allure.step("Creating contacts", step -> {
+            app.contacts().createContact(contact);
+        });
         var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -160,7 +176,9 @@ public class ContactCreationTests extends TestBase {
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.add(contact.withId(maxId));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newContacts, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newContacts, expectedList);
+        });
     }
 
     @Test
@@ -171,16 +189,23 @@ public class ContactCreationTests extends TestBase {
                 .withAddress(CommonFunctions.randomString(15))
                 .withMobilePhone(CommonFunctions.randomString(12))
                 .withEmail(CommonFunctions.randomEmail(10));
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().createGroup(
-                    new GroupData("", "Test group", "test group header", "test group footer"));
-        }
+        Allure.step("Checking precondition", step -> {
+            if (app.hbm().getGroupCount() == 0) {
+                app.hbm().createGroup(
+                        new GroupData("", "Test group", "test group header", "test group footer"));
+            }
+        });
+
         var group = app.hbm().getGroupList().get(0);
 
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createContact(contact, group);
-        var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+        Allure.step("Creating contact in group", step -> {
+            app.contacts().createContact(contact, group);
+        });
 
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+        });
     }
 }

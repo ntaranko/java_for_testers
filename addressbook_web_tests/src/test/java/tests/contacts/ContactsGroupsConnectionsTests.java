@@ -35,13 +35,18 @@ public class ContactsGroupsConnectionsTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactAndGroupProvider")
     void canRemoveContactFromGroup(ContactData contact, GroupData group) {
-        if (app.hbm().getContactCount() == 0) {
-            app.contacts().createContact(contact);
-        }
+        Allure.step("Checking precondition if contact exists", step -> {
+            if (app.hbm().getContactCount() == 0) {
+                app.contacts().createContact(contact);
+            }
+        });
 
-        if (app.hbm().getGroupCount() == 0) {
-            app.groups().createGroup(group);
-        }
+        Allure.step("Checking precondition if group exists", step -> {
+            if (app.hbm().getGroupCount() == 0) {
+                app.groups().createGroup(group);
+            }
+        });
+
         // Precondition: connect group and contact
         var contactList = app.hbm().getContactList();
         var rnd = new Random();
@@ -52,13 +57,16 @@ public class ContactsGroupsConnectionsTests extends TestBase {
         // Precondition end------
 
         var oldRelated = app.hbm().getContactsInGroup(groupToRemove);
-        app.contacts().removeContactFromGroup(contactToRemove, groupToRemove);
+        Allure.step("Removing contact from group", step -> {
+            app.contacts().removeContactFromGroup(contactToRemove, groupToRemove);
+        });
         var newRelated = app.hbm().getContactsInGroup(groupToRemove);
 
         var expectedList = new ArrayList<>(oldRelated);
         expectedList.remove(contactToRemove);
-
-        Assertions.assertEquals(newRelated, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newRelated, expectedList);
+        });
     }
 
     @ParameterizedTest
@@ -75,9 +83,8 @@ public class ContactsGroupsConnectionsTests extends TestBase {
 
         var relatedContactList = app.hbm().getContactsInGroup(groupToAdd);
         var contactList = app.hbm().getContactList();
-        if (relatedContactList.size() == contactList.size()){
+        if (relatedContactList.size() == contactList.size()) {
             app.contacts().createContact(contact);
-   //         contactList.add(contact);
         }
         var notRelatedContactList = app.hbm().getContactList();
         for (ContactData contactData : contactList) {
@@ -89,8 +96,9 @@ public class ContactsGroupsConnectionsTests extends TestBase {
         var rnd = new Random();
         var index = rnd.nextInt(notRelatedContactList.size());
         var contactToAdd = notRelatedContactList.get(index);
-
-        app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+        Allure.step("Adding contact to group", step ->{
+            app.contacts().addContactToGroup(contactToAdd, groupToAdd);
+        });
         var newRelatedContactList = app.hbm().getContactsInGroup(groupToAdd);
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));

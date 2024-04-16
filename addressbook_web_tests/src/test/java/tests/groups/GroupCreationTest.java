@@ -3,6 +3,7 @@ package tests.groups;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import common.CommonFunctions;
+import io.qameta.allure.Allure;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,17 +41,20 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("groupProvider")
     public void canCreateMultipleGroup(GroupData group) {
         var oldGroups = app.groups().getList();
-        app.groups().createGroup(group);
+        Allure.step("Group creation", step -> {
+            app.groups().createGroup(group);
+        });
         var newGroups = app.groups().getList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newGroups.sort(compareById);
-
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newGroups, expectedList);
+        });
     }
 
     public static List<GroupData> jsonGroupProvider() throws IOException {
@@ -96,7 +100,9 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("jsonGroupProvider")
     public void canCreateMultipleGroupFromJson(GroupData group) {
         var oldGroups = app.groups().getList();
-        app.groups().createGroup(group);
+        Allure.step("Group creation", step -> {
+            app.groups().createGroup(group);
+        });
         var newGroups = app.groups().getList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -106,7 +112,9 @@ public class GroupCreationTest extends TestBase {
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(newGroups.get(newGroups.size() - 1).id()).withHeader("").withFooter(""));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newGroups, expectedList);
+        });
     }
 
     public static List<GroupData> negativeGroupProvider() {
@@ -118,9 +126,13 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData group) {
         var oldGroups = app.groups().getList();
-        app.groups().createGroup(group);
+        Allure.step("Group creation", step -> {
+            app.groups().createGroup(group);
+        });
         var newGroups = app.groups().getList();
-        Assertions.assertEquals(oldGroups, newGroups);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(oldGroups, newGroups);
+        });
     }
 
     public static List<GroupData> singleGroupProvider() {
@@ -134,7 +146,9 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("singleGroupProvider")
     public void canCreateGroupJdbc(GroupData group) {
         var oldGroups = app.jdbc().getGroupList();
-        app.groups().createGroup(group);
+        Allure.step("Group creation", step -> {
+            app.groups().createGroup(group);
+        });
         var newGroups = app.jdbc().getGroupList();
         Comparator<GroupData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -145,7 +159,9 @@ public class GroupCreationTest extends TestBase {
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(maxId));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(newGroups, expectedList);
+        });
     }
 
     public static Stream<GroupData> groupsProviderStream() {
@@ -160,13 +176,17 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("groupsProviderStream")
     public void canCreateGroupHibernate(GroupData group) {
         var oldGroups = app.hbm().getGroupList();
-        app.groups().createGroup(group);
+        Allure.step("Group creation", step -> {
+            app.groups().createGroup(group);
+        });
         var newGroups = app.hbm().getGroupList();
         var extraGroups = newGroups.stream().filter(
                 g -> !oldGroups.contains(g)).toList();
         var newId = extraGroups.get(0).id();
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(newId));
-        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+        Allure.step("Validating result", step -> {
+            Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+        });
     }
 }
