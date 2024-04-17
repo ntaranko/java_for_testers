@@ -57,6 +57,10 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
     }
 
+    private void selectAllOption() {
+        new Select(manager.driver.findElement(By.name("group"))).selectByVisibleText("[all]");
+    }
+
     private void addToGroup() {
         click(By.name("add"));
     }
@@ -167,6 +171,7 @@ public class ContactHelper extends HelperBase {
         selectContact(contact);
         removeSelectedContactFromGroup();
         openHomePage();
+        selectAllOption();
     }
 
     private void removeSelectedContactFromGroup() {
